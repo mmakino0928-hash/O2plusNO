@@ -1,14 +1,13 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
-type PageId = 'home' | 'philosophy' | 'business' | 'about';
+type PageId = 'home' | 'philosophy' | 'business' | 'about' | 'privacy';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [showPrivacy, setShowPrivacy] = useState(false);
-
+  
   // アニメーションを何度でも実行するためのIntersection Observerの設定
   useEffect(() => {
     const observerOptions = {
@@ -395,6 +394,230 @@ const App: React.FC = () => {
           </div>
         )}
 
+        {/* PRIVACY POLICY PAGE */}
+        {currentPage === 'privacy' && (
+          <div className="page-content active">
+            <section className="py-20 md:py-24">
+              <div className="max-w-4xl mx-auto px-6">
+                <h2 className="text-primary font-bold tracking-widest uppercase mb-4 reveal">Privacy Policy</h2>
+                <h3 className="text-3xl md:text-6xl font-black mb-8 md:mb-12 reveal">プライバシーポリシー</h3>
+                <p className="text-gray-500 text-base md:text-lg mb-12 reveal">最終更新日：2024年1月1日</p>
+
+                <div className="space-y-12 md:space-y-16">
+                  {/* 前文 */}
+                  <div className="glass-card p-8 md:p-12 rounded-[2rem] reveal">
+                    <p className="text-gray-600 text-base md:text-lg leading-loose">
+                      合同会社O2plusNO（以下、「当社」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）における、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
+                    </p>
+                  </div>
+
+                  {/* 第1条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.1s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">1</span>
+                      <h4 className="text-xl md:text-2xl font-black">個人情報の定義</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>「個人情報」とは、個人情報保護法にいう「個人情報」を指すものとし、生存する個人に関する情報であって、当該情報に含まれる氏名、生年月日、住所、電話番号、連絡先その他の記述等により特定の個人を識別できる情報及び容貌、指紋、声紋にかかるデータ、及び健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報（個人識別情報）を指します。</p>
+                    </div>
+                  </div>
+
+                  {/* 第2条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.15s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">2</span>
+                      <h4 className="text-xl md:text-2xl font-black">個人情報の収集方法</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>当社は、ユーザーが利用登録をする際に氏名、生年月日、住所、電話番号、メールアドレス、銀行口座番号、クレジットカード番号、運転免許証番号などの個人情報をお尋ねすることがあります。また、ユーザーと提携先などとの間でなされたユーザーの個人情報を含む取引記録や決済に関する情報を、当社の提携先（情報提供元、広告主、広告配信先などを含みます。以下、｢提携先｣といいます。）などから収集することがあります。</p>
+                    </div>
+                  </div>
+
+                  {/* 第3条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.2s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">3</span>
+                      <h4 className="text-xl md:text-2xl font-black">個人情報を収集・利用する目的</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose">
+                      <p className="mb-4">当社が個人情報を収集・利用する目的は、以下のとおりです。</p>
+                      <ul className="space-y-3">
+                        {[
+                          '当社サービスの提供・運営のため',
+                          'ユーザーからのお問い合わせに回答するため（本人確認を行うことを含む）',
+                          'ユーザーが利用中のサービスの新機能、更新情報、キャンペーン等及び当社が提供する他のサービスの案内のメールを送付するため',
+                          'メンテナンス、重要なお知らせなど必要に応じたご連絡のため',
+                          '利用規約に違反したユーザーや、不正・不当な目的でサービスを利用しようとするユーザーの特定をし、ご利用をお断りするため',
+                          'ユーザーにご自身の登録情報の閲覧や変更、削除、ご利用状況の閲覧を行っていただくため',
+                          '有料サービスにおいて、ユーザーに利用料金を請求するため',
+                          '上記の利用目的に付随する目的'
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-start gap-3">
+                            <span className="w-6 h-6 bg-blue-100 text-primary rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">{i + 1}</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* 第4条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.25s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">4</span>
+                      <h4 className="text-xl md:text-2xl font-black">利用目的の変更</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>当社は、利用目的が変更前と関連性を有すると合理的に認められる場合に限り、個人情報の利用目的を変更するものとします。</p>
+                      <p>利用目的の変更を行った場合には、変更後の目的について、当社所定の方法により、ユーザーに通知し、または本ウェブサイト上に公表するものとします。</p>
+                    </div>
+                  </div>
+
+                  {/* 第5条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.3s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">5</span>
+                      <h4 className="text-xl md:text-2xl font-black">個人情報の第三者提供</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>当社は、次に掲げる場合を除いて、あらかじめユーザーの同意を得ることなく、第三者に個人情報を提供することはありません。ただし、個人情報保護法その他の法令で認められる場合を除きます。</p>
+                      <ul className="space-y-3 mt-4">
+                        {[
+                          '人の生命、身体または財産の保護のために必要がある場合であって、本人の同意を得ることが困難であるとき',
+                          '公衆衛生の向上または児童の健全な育成の推進のために特に必要がある場合であって、本人の同意を得ることが困難であるとき',
+                          '国の機関もしくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合であって、本人の同意を得ることにより当該事務の遂行に支障を及ぼすおそれがあるとき',
+                          '予め次の事項を告知あるいは公表し、かつ当社が個人情報保護委員会に届出をしたとき'
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-start gap-3">
+                            <span className="w-6 h-6 bg-blue-100 text-primary rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">{i + 1}</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* 第6条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.35s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">6</span>
+                      <h4 className="text-xl md:text-2xl font-black">個人情報の開示</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>当社は、本人から個人情報の開示を求められたときは、本人に対し、遅滞なくこれを開示します。ただし、開示することにより次のいずれかに該当する場合は、その全部または一部を開示しないこともあり、開示しない決定をした場合には、その旨を遅滞なく通知します。</p>
+                      <ul className="space-y-3 mt-4">
+                        {[
+                          '本人または第三者の生命、身体、財産その他の権利利益を害するおそれがある場合',
+                          '当社の業務の適正な実施に著しい支障を及ぼすおそれがある場合',
+                          'その他法令に違反することとなる場合'
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-start gap-3">
+                            <span className="w-6 h-6 bg-blue-100 text-primary rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">{i + 1}</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-4">なお、個人情報の開示に際しては、1件あたり1,000円の手数料を申し受けます。</p>
+                    </div>
+                  </div>
+
+                  {/* 第7条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.4s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">7</span>
+                      <h4 className="text-xl md:text-2xl font-black">個人情報の訂正および削除</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>ユーザーは、当社の保有する自己の個人情報が誤った情報である場合には、当社が定める手続きにより、当社に対して個人情報の訂正、追加または削除（以下、「訂正等」といいます。）を請求することができます。</p>
+                      <p>当社は、ユーザーから前項の請求を受けてその請求に応じる必要があると判断した場合には、遅滞なく、当該個人情報の訂正等を行うものとします。</p>
+                      <p>当社は、前項の規定に基づき訂正等を行った場合、または訂正等を行わない旨の決定をしたときは遅滞なく、これをユーザーに通知します。</p>
+                    </div>
+                  </div>
+
+                  {/* 第8条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.45s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">8</span>
+                      <h4 className="text-xl md:text-2xl font-black">個人情報の利用停止等</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>当社は、本人から、個人情報が、利用目的の範囲を超えて取り扱われているという理由、または不正の手段により取得されたものであるという理由により、その利用の停止または消去（以下、「利用停止等」といいます。）を求められた場合には、遅滞なく必要な調査を行います。</p>
+                      <p>前項の調査結果に基づき、その請求に応じる必要があると判断した場合には、遅滞なく、当該個人情報の利用停止等を行います。</p>
+                      <p>当社は、前項の規定に基づき利用停止等を行った場合、または利用停止等を行わない旨の決定をしたときは、遅滞なく、これをユーザーに通知します。</p>
+                    </div>
+                  </div>
+
+                  {/* 第9条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.5s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">9</span>
+                      <h4 className="text-xl md:text-2xl font-black">Cookieの使用について</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>当社のウェブサイトでは、ユーザーの利便性向上のためにCookieを使用することがあります。Cookieとは、ウェブサイトがユーザーのコンピュータに送信する小さなテキストファイルです。</p>
+                      <p>Cookieは、ウェブサイトの利用状況を分析し、サービスを改善するために使用されます。ユーザーはブラウザの設定によりCookieの受け取りを拒否することができますが、その場合、一部のサービスが利用できなくなる可能性があります。</p>
+                    </div>
+                  </div>
+
+                  {/* 第10条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.55s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">10</span>
+                      <h4 className="text-xl md:text-2xl font-black">アクセス解析ツールについて</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>当社のウェブサイトでは、Googleによるアクセス解析ツール「Googleアナリティクス」を利用しています。このGoogleアナリティクスはトラフィックデータの収集のためにCookieを使用しています。このトラフィックデータは匿名で収集されており、個人を特定するものではありません。</p>
+                      <p>この機能はCookieを無効にすることで収集を拒否することができますので、お使いのブラウザの設定をご確認ください。この規約に関して、詳しくはGoogleアナリティクスサービス利用規約をご覧ください。</p>
+                    </div>
+                  </div>
+
+                  {/* 第11条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.6s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">11</span>
+                      <h4 className="text-xl md:text-2xl font-black">セキュリティについて</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>当社は、個人情報の漏洩、滅失または毀損の防止その他の個人情報の安全管理のために必要かつ適切な措置を講じます。また、個人情報を取り扱う従業員や委託先に対して、必要かつ適切な監督を行います。</p>
+                      <p>当社は、SSL（Secure Socket Layer）技術を使用して、インターネット上でのデータ通信を暗号化し、個人情報の保護に努めています。</p>
+                    </div>
+                  </div>
+
+                  {/* 第12条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.65s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">12</span>
+                      <h4 className="text-xl md:text-2xl font-black">プライバシーポリシーの変更</h4>
+                    </div>
+                    <div className="pl-16 text-gray-600 leading-loose space-y-4">
+                      <p>本ポリシーの内容は、法令その他本ポリシーに別段の定めのある事項を除いて、ユーザーに通知することなく、変更することができるものとします。</p>
+                      <p>当社が別途定める場合を除いて、変更後のプライバシーポリシーは、本ウェブサイトに掲載したときから効力を生じるものとします。</p>
+                    </div>
+                  </div>
+
+                  {/* 第13条 */}
+                  <div className="reveal" style={{ transitionDelay: '0.7s' }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black text-lg">13</span>
+                      <h4 className="text-xl md:text-2xl font-black">お問い合わせ窓口</h4>
+                    </div>
+                    <div className="pl-16">
+                      <p className="text-gray-600 leading-loose mb-6">本ポリシーに関するお問い合わせは、下記の窓口までお願いいたします。</p>
+                      <div className="bg-gray-50 p-6 md:p-8 rounded-2xl space-y-3">
+                        <p className="font-bold text-gray-800">合同会社O2plusNO</p>
+                        <p className="text-gray-600">〒351-0014 埼玉県朝霞市膝折町1-1-53</p>
+                        <p className="text-gray-600">Email: o2plusno20171011@gmail.com</p>
+                        <p className="text-gray-600">TEL: 050-5527-6238</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </section>
+          </div>
+        )}
+
         {/* CONTACT SECTION */}
         <section id="contact-section" className="py-20 md:py-32 bg-white relative border-t border-gray-100">
           <div className="bg-pattern absolute inset-0 -z-10"></div>
@@ -445,22 +668,10 @@ const App: React.FC = () => {
               </div>
             </div>
             
-            {showPrivacy && (
-              <div className="mb-12 p-6 md:p-8 bg-white/5 rounded-2xl md:rounded-3xl border border-white/10 text-left reveal visible">
-                <h6 className="text-base md:text-lg font-bold mb-4">プライバシーポリシー</h6>
-                <div className="text-xs md:text-sm text-gray-400 space-y-4">
-                  <p>合同会社O2plusNO（以下、「当社」）は、本ウェブサイト上で提供するサービスにおける、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシーを定めます。</p>
-                  <p>1. 個人情報の管理：当社は、お客さまの個人情報を正確かつ最新の状態に保ち、個人情報への不正アクセス・紛失・破損・改ざん・漏洩などを防止するため、セキュリティシステムの維持・管理体制の整備等の必要な措置を講じ、安全対策を実施し個人情報の厳重な管理を行ないます。</p>
-                  <p>2. 個人情報の利用目的：お客さまからお預かりした個人情報は、当社からのご連絡や業務のご案内、ご質問に対する回答として, 電子メールや資料のご送送に利用いたします。</p>
-                </div>
-                <button onClick={() => setShowPrivacy(false)} className="mt-6 text-[10px] md:text-xs text-white underline">閉じる</button>
-              </div>
-            )}
-
             <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
               <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
                 <p className="text-gray-500 text-[10px] md:text-xs font-bold uppercase">&copy; 2017-2026 合同会社O2plusNO.</p>
-                <button onClick={() => setShowPrivacy(!showPrivacy)} className="text-[10px] md:text-xs text-gray-500 hover:text-white underline transition-colors">Privacy Policy</button>
+                <span onClick={() => switchPage('privacy')} className="text-[10px] md:text-xs text-gray-500 hover:text-white underline transition-colors cursor-pointer">Privacy Policy</span>
               </div>
               <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-[10px] md:text-xs font-bold text-gray-500 uppercase">
                 {(['home', 'philosophy', 'business', 'about'] as PageId[]).map((id) => (
