@@ -32,6 +32,8 @@
         }
     </script>
     <style type="text/css">
+        .keep-all { word-break: keep-all; overflow-wrap: anywhere; }
+        
         .page-content {
             display: none;
             opacity: 0;
@@ -42,9 +44,10 @@
             animation: pageEntry 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         @keyframes pageEntry {
-            from { opacity: 0; transform: scale(0.99) translateY(10px); }
+            from { opacity: 0; transform: scale(0.98) translateY(20px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
+        
         #page-loader {
             position: fixed;
             top: 0;
@@ -52,22 +55,26 @@
             width: 100%;
             height: 100%;
             background: #1E40AF;
-            z-index: 100;
+            z-index: 9999;
             transform: translateY(100%);
             transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
         }
         body.loading #page-loader {
             transform: translateY(0);
         }
+
+        /* 強化されたアニメーション */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateY(40px) scale(0.95);
+            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
         }
         .reveal.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
+
         .nav-link {
             position: relative;
             cursor: pointer;
@@ -85,6 +92,7 @@
         .nav-link.active-nav::after {
             width: 100%;
         }
+        
         .blob {
             position: absolute;
             width: 500px;
@@ -99,35 +107,39 @@
             0% { transform: translate(0, 0); }
             100% { transform: translate(100px, 50px); }
         }
+        
         .bg-pattern {
             background-image: radial-gradient(#1e40af 0.5px, transparent 0.5px);
             background-size: 24px 24px;
             opacity: 0.1;
         }
+        
         .glass-card {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(229, 231, 235, 0.5);
-            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .glass-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-12px) scale(1.02);
             background: white;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 30px 60px -12px rgba(30, 64, 175, 0.1);
         }
+        
         .img-container {
             overflow: hidden;
             border-radius: 2rem;
         }
         .business-img {
-            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .img-container:hover .business-img {
-            transform: scale(1.08);
+            transform: scale(1.1);
         }
+        
         @keyframes pulse-red {
             0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
             100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
         .animate-pulse-red {
@@ -148,7 +160,6 @@
 </head>
 <body class="bg-white text-gray-900 font-sans overflow-x-hidden pt-20">
     <div id="root"></div>
-    <!-- 実行スクリプトの追加 -->
     <script type="module" src="./index.tsx"></script>
 </body>
 </html>
