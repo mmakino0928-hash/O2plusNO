@@ -7,6 +7,22 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
+  const [introComplete, setIntroComplete] = useState(false);
+
+  // Hide intro overlay after animation, but keep logo
+  useEffect(() => {
+    const overlayTimer = setTimeout(() => {
+      setShowIntro(false);
+    }, 2400);
+    const completeTimer = setTimeout(() => {
+      setIntroComplete(true);
+    }, 2400);
+    return () => {
+      clearTimeout(overlayTimer);
+      clearTimeout(completeTimer);
+    };
+  }, []);
   
   // アニメーションを何度でも実行するためのIntersection Observerの設定
   useEffect(() => {
@@ -84,16 +100,17 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Intro Animation */}
+      {showIntro && <div className="intro-overlay"></div>}
+      <span className="intro-logo cursor-pointer" onClick={() => switchPage('home')}>O2plusNO</span>
+
       <div id="page-loader"></div>
 
       {/* Header */}
       <header className="fixed top-0 left-0 w-full z-[100] bg-white/90 backdrop-blur-xl border-b border-gray-100 h-20">
         <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-          <div 
-            onClick={() => switchPage('home')} 
-            className="text-xl md:text-2xl font-black text-primary tracking-tighter cursor-pointer group flex items-center z-[110]"
-          >
-            <span className="group-hover:text-primaryLight transition-colors duration-300">O2plusNO</span>
+          <div className="text-xl md:text-2xl font-black text-primary tracking-tighter cursor-pointer group flex items-center z-[110] opacity-0 pointer-events-none">
+            <span>O2plusNO</span>
           </div>
 
           <nav className="hidden lg:flex items-center space-x-10">
@@ -158,31 +175,53 @@ const App: React.FC = () => {
         {/* HOME PAGE */}
         {currentPage === 'home' && (
           <div className="page-content active">
-            <section className="py-20 md:py-48 text-center relative overflow-hidden">
-              <div className="max-w-7xl mx-auto px-6">
-                <div className="inline-block bg-blue-50 text-primary px-6 py-2 rounded-full text-xs md:text-sm font-bold mb-8 reveal" style={{ transitionDelay: '0.1s' }}>
+            <section className="py-20 md:py-48 text-center relative overflow-hidden min-h-[90vh] flex items-center">
+              {/* Background Image */}
+              <div className="absolute inset-0 z-0 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070"
+                  alt=""
+                  className="w-full h-full object-cover hero-bg-reveal"
+                />
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/60 to-blue-50/50 hero-overlay-reveal"></div>
+                {/* Subtle geometric pattern */}
+                <div className="absolute inset-0 opacity-[0.06]" style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230F4C81' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                }}></div>
+              </div>
+
+              {/* Decorative Elements */}
+              <div className="absolute top-20 right-10 md:right-20 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-br from-primary/10 to-blue-400/10 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-20 left-10 md:left-20 w-48 md:w-72 h-48 md:h-72 bg-gradient-to-tr from-blue-300/10 to-primary/5 rounded-full blur-3xl"></div>
+
+              <div className="max-w-7xl mx-auto px-6 relative z-10">
+                <div className="inline-block bg-white/80 backdrop-blur-sm text-primary px-6 py-2 rounded-full text-xs md:text-sm font-bold mb-8 hero-slide-up hero-delay-1 shadow-lg shadow-blue-100/50">
                   本当になりたい自分に出会えるキッカケを。
                 </div>
-                <h1 className="text-4xl md:text-8xl font-black leading-tight mb-8 md:mb-12 reveal keep-all" style={{ transitionDelay: '0.2s' }}>
-                  自立の先にある<br className="hidden md:block" />
-                  <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-400">豊かな未来</span>を共に。
+                <h1 className="text-4xl md:text-8xl font-black leading-tight mb-8 md:mb-12 keep-all text-center">
+                  <span className="block hero-slide-up hero-delay-2 hero-text-depth">自立の先にある</span>
+                  <span className="block hero-slide-up hero-delay-3"><span className="text-primary hero-text-depth-primary">豊かな未来</span><span className="hero-text-depth">を共に</span></span>
                 </h1>
-                <p className="max-w-3xl mx-auto text-gray-500 text-base md:text-2xl leading-relaxed mb-12 md:mb-16 reveal px-4" style={{ transitionDelay: '0.3s' }}>
+                <p className="max-w-3xl mx-auto text-gray-800 text-base md:text-2xl leading-relaxed mb-12 md:mb-16 hero-slide-up hero-delay-4 px-4 font-bold hero-text-depth">
                   自立した個人を育成し, その力が「利他」に向けられることで、より良い社会が作られると信じています。
                 </p>
-                <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 reveal" style={{ transitionDelay: '0.4s' }}>
+                <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 hero-slide-up hero-delay-5">
                   <button onClick={() => switchPage('business')} className="w-full md:w-auto bg-primary text-white px-10 md:px-12 py-5 md:py-6 rounded-full text-lg md:text-xl font-black hover:bg-blue-800 transition-all shadow-2xl shadow-blue-200 hover:-translate-y-2">
                     事業内容を詳しく
                   </button>
-                  <button onClick={scrollToContact} className="w-full md:w-auto bg-white border-2 border-gray-100 px-10 md:px-12 py-5 md:py-6 rounded-full text-lg md:text-xl font-black hover:bg-gray-50 transition-all">
+                  <button onClick={scrollToContact} className="w-full md:w-auto bg-white/80 backdrop-blur-sm border-2 border-gray-100 px-10 md:px-12 py-5 md:py-6 rounded-full text-lg md:text-xl font-black hover:bg-white transition-all shadow-lg">
                     無料で相談する
                   </button>
                 </div>
               </div>
             </section>
 
-            <section className="py-16 md:py-20 bg-gray-50/50">
-              <div className="max-w-7xl mx-auto px-6">
+            <section className="py-16 md:py-20 bg-gray-50/50 relative">
+              <div className="absolute inset-0 opacity-[0.03]" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230F4C81' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              }}></div>
+              <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                   {[
                     { label: 'History', val: '2017', unit: '年設立', desc: '長年の実績に基づいた安定したサポート体制を構築しています。', delay: '0.1s' },
@@ -199,8 +238,11 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            <section className="py-20 md:py-32">
-              <div className="max-w-7xl mx-auto px-6">
+            <section className="py-20 md:py-32 relative">
+              <div className="absolute inset-0 opacity-[0.02]" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230F4C81' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              }}></div>
+              <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <div className="text-center mb-12 md:mb-20 reveal">
                   <h2 className="text-primary font-bold tracking-widest uppercase mb-4 text-sm md:text-base">What we do</h2>
                   <h3 className="text-3xl md:text-6xl font-black italic">Three Core Businesses</h3>
@@ -211,7 +253,7 @@ const App: React.FC = () => {
                     { id: 'service-remote', title: '在宅ワークコンサル', img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200', desc: '未経験から自立へ。一生モノのスキルを身につけるための完全サポート。', delay: '0.2s' },
                     { id: 'service-se', title: 'SE専門 営業代理', img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200', desc: '業界20年のコネクションで, エンジニアに最適な環境と報酬を提供。', delay: '0.3s' }
                   ].map((service, i) => (
-                    <div key={i} className="group cursor-pointer reveal hover:scale-[1.02] md:hover:scale-105 transition-transform" onClick={() => switchPage('business', service.id)} style={{ transitionDelay: service.delay }}>
+                    <div key={i} className="group cursor-pointer reveal hover:scale-[1.02] md:hover:scale-105" onClick={() => switchPage('business', service.id)} style={{ transitionDelay: service.delay }}>
                       <div className="img-container mb-6 md:mb-8 aspect-[4/3] shadow-lg">
                         <img src={service.img} className="business-img w-full h-full object-cover" alt={service.title} />
                       </div>

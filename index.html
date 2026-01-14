@@ -129,12 +129,18 @@
         .img-container {
             overflow: hidden;
             border-radius: 2rem;
+            transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 1s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .business-img {
             transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .img-container:hover .business-img {
             transform: scale(1.1);
+        }
+
+        .group:hover .img-container {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(30, 64, 175, 0.15);
         }
         
         @keyframes pulse-red {
@@ -144,6 +150,195 @@
         }
         .animate-pulse-red {
             animation: pulse-red 2s infinite;
+        }
+
+        /* Hero background image animation */
+        .hero-bg-reveal {
+            opacity: 0;
+            transform: scale(1.1);
+            animation: heroBgReveal 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes heroBgReveal {
+            0% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Hero overlay animation */
+        .hero-overlay-reveal {
+            opacity: 0;
+            animation: heroOverlayReveal 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: 0.3s;
+        }
+        @keyframes heroOverlayReveal {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Hero slide-up animation */
+        .hero-slide-up {
+            opacity: 0;
+            transform: translateY(60px);
+            animation: heroSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes heroSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .hero-delay-1 { animation-delay: 0.6s; }
+        .hero-delay-2 { animation-delay: 0.8s; }
+        .hero-delay-3 { animation-delay: 1.0s; }
+        .hero-delay-4 { animation-delay: 1.2s; }
+        .hero-delay-5 { animation-delay: 1.4s; }
+
+        /* Intro animation */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1E40AF;
+            z-index: 9998;
+            animation: introSlideDown 1s cubic-bezier(0.76, 0, 0.24, 1) 1.2s forwards;
+        }
+        @keyframes introSlideDown {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+
+        .intro-logo {
+            position: fixed;
+            z-index: 9999;
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            color: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: introLogoMove 1s cubic-bezier(0.76, 0, 0.24, 1) 1.2s forwards;
+        }
+        @keyframes introLogoMove {
+            0% {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 2.5rem;
+                color: white;
+            }
+            40% {
+                color: white;
+            }
+            60% {
+                color: #1E40AF;
+            }
+            100% {
+                top: 2.5rem;
+                left: 1.5rem;
+                transform: translate(0, -50%);
+                font-size: 1.25rem;
+                color: #1E40AF;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .intro-logo {
+                animation: introLogoMoveMd 1s cubic-bezier(0.76, 0, 0.24, 1) 1.2s forwards;
+            }
+            @keyframes introLogoMoveMd {
+                0% {
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 3rem;
+                    color: white;
+                }
+                40% {
+                    color: white;
+                }
+                60% {
+                    color: #1E40AF;
+                }
+                100% {
+                    top: 2.5rem;
+                    left: calc((100vw - 80rem) / 2 + 1.5rem);
+                    transform: translate(0, -50%);
+                    font-size: 1.5rem;
+                    color: #1E40AF;
+                }
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .intro-logo {
+                animation: introLogoMoveLg 1s cubic-bezier(0.76, 0, 0.24, 1) 1.2s forwards;
+            }
+            @keyframes introLogoMoveLg {
+                0% {
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 3rem;
+                    color: white;
+                }
+                40% {
+                    color: white;
+                }
+                60% {
+                    color: #1E40AF;
+                }
+                100% {
+                    top: 2.5rem;
+                    left: calc((100vw - 80rem) / 2 + 1.5rem);
+                    transform: translate(0, -50%);
+                    font-size: 1.5rem;
+                    color: #1E40AF;
+                }
+            }
+        }
+
+        .intro-hidden {
+            display: none !important;
+        }
+
+        /* Hero text depth effect */
+        .hero-text-depth {
+            text-shadow:
+                0 2px 0 rgba(255,255,255,0.9),
+                0 4px 8px rgba(0,0,0,0.15),
+                0 8px 16px rgba(30,64,175,0.1);
+        }
+        .hero-text-depth-primary {
+            text-shadow:
+                0 4px 8px rgba(30,64,175,0.3),
+                0 8px 24px rgba(30,64,175,0.25);
+        }
+
+        /* Elegant text animation - subtle float */
+        .wave-text {
+            display: inline-block;
+        }
+        .wave-char {
+            display: inline-block;
+            animation: elegantFloat 4s ease-in-out infinite;
+        }
+        @keyframes elegantFloat {
+            0%, 100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-6px);
+                opacity: 0.85;
+            }
         }
     </style>
     <script type="importmap">
